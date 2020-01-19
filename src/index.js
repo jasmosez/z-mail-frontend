@@ -100,9 +100,8 @@ document.addEventListener('DOMContentLoaded', function(){
   loginButton = document.getElementById('login')
 
   loginButton.addEventListener('click', function() {
-    // fetch("http://aee5a30f.ngrok.io/auth/google_oauth2")
-    fetch("http://localhost:4567", {mode: "no-cors" })
-
+    console.log("CLICK")
+    // fetch("http://localhost:4567/auth/google_oauth2")
     
   })
 
