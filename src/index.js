@@ -96,7 +96,6 @@ dataTime = "2020-01-16"
 document.addEventListener('DOMContentLoaded', function(){
   console.log("DOM loaded")
 
-
   loginButton = document.getElementById('login')
 
   loginButton.addEventListener('click', function() {
@@ -123,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 
   function clickHandler(arguments) {
-    debugger
+    // debugger
     const id = arguments[0].id
     const itemCount = arguments[0].value
     const date = arguments[0].x
