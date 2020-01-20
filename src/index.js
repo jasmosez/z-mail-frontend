@@ -123,31 +123,54 @@ document.addEventListener('DOMContentLoaded', function(){
 
   function clickHandler(arguments) {
     // debugger
-    const id = arguments[0].id
+    const listGroup = document.getElementById('list-group')
+    // const id = arguments[0].id
     const itemCount = arguments[0].value
-    const date = arguments[0].x
-    const showPanel = document.getElementById('show')
-    showPanel.innerText = `${id} on ${date}`
-    ul = document.createElement('ul')
+    // const date = arguments[0].x
+    // const showPanel = document.getElementById('show')
+    // showPanel.innerText = `${id} on ${date}`
+    // ul = document.createElement('ul')
+    while (listGroup.hasChildNodes()) {  
+      listGroup.removeChild(listGroup.firstChild);
+    }
     
     for (let i = 1; i <= itemCount; i++) {
-      li = document.createElement('li')
-      li.innerText = `Message #${i}`
-      ul.appendChild(li)
+      // li = document.createElement('li')
+      // li.innerText = `Message #${i}`
+      // ul.appendChild(li)
+      displayEmails(arguments, i)
     }
 
     showPanel.appendChild(ul)
-    
     // value: 4
     // id: "Inbox"
     // index: 34
     // name: "Inbox"
-
-    
     // for as many messages as we would expect, generate a little table of results
 
     // mock up gmails for 1 or 2 days
     // date, label, message
+    
+
+    function displayEmails(arguments, num) {
+      const id = arguments[0].id
+      const itemCount = num
+      const date = arguments[0].x
+      const href = document.createElement('a')
+      href.href = '#'
+      href.className = "list-group-item"
+      href.innerHTML = `<div class="checkbox"><label><input type="checkbox"></label></div>
+      <span class="glyphicon glyphicon-star-empty"></span>
+      <span class="name" style="min-width: 120px;
+            display: inline-block;">${id}</span>
+      <span class="">${date} Message #${itemCount}</span>
+      <span class="text-muted" style="font-size: 11px;">Random Message</span>
+      <span class="badge">12:10 AM</span>
+      <span class="pull-right"><span class="glyphicon glyphicon-paperclip"></span></span>`
+      listGroup.append(href)
+    }
+
+    
   }
 
   const chart = c3.generate({
