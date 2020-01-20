@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function(){
       displayEmails(arguments, i)
     }
 
-    showPanel.appendChild(ul)
+    // showPanel.appendChild(ul)
     // value: 4
     // id: "Inbox"
     // index: 34
