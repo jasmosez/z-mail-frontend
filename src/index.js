@@ -159,14 +159,15 @@ document.addEventListener('DOMContentLoaded', function(){
       const href = document.createElement('a')
       href.href = '#'
       href.className = "list-group-item"
-      href.innerHTML = `<div class="checkbox"><label><input type="checkbox"></label></div>
-      <span class="glyphicon glyphicon-star-empty"></span>
-      <span class="name" style="min-width: 120px;
-            display: inline-block;">${id}</span>
-      <span class="">${date} Message #${itemCount}</span>
-      <span class="text-muted" style="font-size: 11px;">Random Message</span>
-      <span class="badge">12:10 AM</span>
-      <span class="pull-right"><span class="glyphicon glyphicon-paperclip"></span></span>`
+      href.innerHTML = `
+        <div class="checkbox"><label><input type="checkbox"></label></div>
+        <span class="glyphicon glyphicon-star-empty"></span>
+        <span class="name" style="min-width: 120px;
+              display: inline-block;">${id}</span>
+        <span class="">${date} Message #${itemCount}</span>
+        <span class="text-muted" style="font-size: 11px;">Random Message</span>
+        <span class="badge">12:10 AM</span>
+        <span class="pull-right"><span class="glyphicon glyphicon-paperclip"></span></span>`
       listGroup.append(href)
     }
 
