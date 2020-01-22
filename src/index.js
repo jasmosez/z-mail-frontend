@@ -1,110 +1,49 @@
 // additional seed data
-dataObj = [
-  { date: "2019-10-19", emailIn: 79, emailOut: 6, inbox: 0 },
-  { date: "2019-10-20", emailIn: 63, emailOut: 23, inbox: 1 },
-  { date: "2019-10-21", emailIn: 44, emailOut: 0, inbox: 0 },
-  { date: "2019-10-22", emailIn: 61, emailOut: 2, inbox: 0 },
-  { date: "2019-10-23", emailIn: 79, emailOut: 6, inbox: 0 },
-  { date: "2019-10-24", emailIn: 63, emailOut: 23, inbox: 0 },
-  { date: "2019-10-25", emailIn: 44, emailOut: 0, inbox: 0 },
-  { date: "2019-10-26", emailIn: 61, emailOut: 2, inbox: 0 },
-  { date: "2019-10-27", emailIn: 57, emailOut: 7, inbox: 0 },
-  { date: "2019-10-28", emailIn: 44, emailOut: 12, inbox: 0 },
-  { date: "2019-10-29", emailIn: 79, emailOut: 6, inbox: 0 },
-  { date: "2019-10-30", emailIn: 63, emailOut: 23, inbox: 0 },
-  { date: "2019-10-31", emailIn: 44, emailOut: 0, inbox: 0 },
-  { date: "2019-11-01", emailIn: 57, emailOut: 7, inbox: 0 },
-  { date: "2019-11-02", emailIn: 44, emailOut: 12, inbox: 0 },
-  { date: "2019-11-03", emailIn: 79, emailOut: 6, inbox: 0 },
-  { date: "2019-11-04", emailIn: 63, emailOut: 23, inbox: 0 },
-  { date: "2019-11-05", emailIn: 44, emailOut: 0, inbox: 0 },
-  { date: "2019-11-06", emailIn: 61, emailOut: 2, inbox: 0 },
-  { date: "2019-11-07", emailIn: 79, emailOut: 6, inbox: 0 },
-  { date: "2019-11-08", emailIn: 63, emailOut: 23, inbox: 0 },
-  { date: "2019-11-09", emailIn: 44, emailOut: 0, inbox: 0 },
-  { date: "2019-11-10", emailIn: 61, emailOut: 2, inbox: 0 },
-  { date: "2019-11-11", emailIn: 57, emailOut: 7, inbox: 0 },
-  { date: "2019-11-12", emailIn: 44, emailOut: 12, inbox: 0 },
-  { date: "2019-11-13", emailIn: 79, emailOut: 6, inbox: 0 },
-  { date: "2019-11-14", emailIn: 63, emailOut: 23, inbox: 0 },
-  { date: "2019-11-15", emailIn: 44, emailOut: 0, inbox: 0 },
-  { date: "2019-11-16", emailIn: 61, emailOut: 2, inbox: 0 },
-  { date: "2019-11-17", emailIn: 57, emailOut: 7, inbox: 0 },
-  { date: "2019-11-18", emailIn: 44, emailOut: 12, inbox: 1 },
-  { date: "2019-11-19", emailIn: 79, emailOut: 6, inbox: 0 },
-  { date: "2019-11-20", emailIn: 63, emailOut: 23, inbox: 1 },
-  { date: "2019-11-21", emailIn: 44, emailOut: 0, inbox: 0 },
-  { date: "2019-11-22", emailIn: 61, emailOut: 2, inbox: 4 },
-  { date: "2019-11-23", emailIn: 79, emailOut: 6, inbox: 0 },
-  { date: "2019-11-24", emailIn: 63, emailOut: 23, inbox: 1 },
-  { date: "2019-11-25", emailIn: 44, emailOut: 0, inbox: 0 },
-  { date: "2019-11-26", emailIn: 61, emailOut: 2, inbox: 4 },
-  { date: "2019-11-27", emailIn: 57, emailOut: 7, inbox: 2 },
-  { date: "2019-11-28", emailIn: 44, emailOut: 12, inbox: 1 },
-  { date: "2019-11-29", emailIn: 79, emailOut: 6, inbox: 0 },
-  { date: "2019-11-30", emailIn: 63, emailOut: 23, inbox: 1 },
-  { date: "2019-12-01", emailIn: 57, emailOut: 7, inbox: 0 },
-  { date: "2019-12-02", emailIn: 44, emailOut: 12, inbox: 0 },
-  { date: "2019-12-03", emailIn: 79, emailOut: 6, inbox: 0 },
-  { date: "2019-12-04", emailIn: 63, emailOut: 23, inbox: 0 },
-  { date: "2019-12-05", emailIn: 44, emailOut: 0, inbox: 0 },
-  { date: "2019-12-06", emailIn: 61, emailOut: 2, inbox: 0 },
-  { date: "2019-12-07", emailIn: 79, emailOut: 6, inbox: 0 },
-  { date: "2019-12-08", emailIn: 63, emailOut: 23, inbox: 0 },
-  { date: "2019-12-09", emailIn: 44, emailOut: 0, inbox: 0 },
-  { date: "2019-12-10", emailIn: 61, emailOut: 2, inbox: 0 },
-  { date: "2019-12-11", emailIn: 57, emailOut: 7, inbox: 0 },
-  { date: "2019-12-12", emailIn: 44, emailOut: 12, inbox: 0 },
-  { date: "2019-12-13", emailIn: 79, emailOut: 6, inbox: 0 },
-  { date: "2019-12-14", emailIn: 63, emailOut: 23, inbox: 0 },
-  { date: "2019-12-15", emailIn: 44, emailOut: 0, inbox: 0 },
-  { date: "2019-12-16", emailIn: 61, emailOut: 2, inbox: 0 },
-  { date: "2019-12-17", emailIn: 57, emailOut: 7, inbox: 0 },
-  { date: "2019-12-18", emailIn: 44, emailOut: 12, inbox: 0 },
-  { date: "2019-12-19", emailIn: 79, emailOut: 6, inbox: 0 },
-  { date: "2019-12-20", emailIn: 63, emailOut: 23, inbox: 0 },
-  { date: "2019-12-21", emailIn: 44, emailOut: 0, inbox: 0 },
-  { date: "2019-12-22", emailIn: 61, emailOut: 2, inbox: 0 },
-  { date: "2019-12-23", emailIn: 79, emailOut: 6, inbox: 0 },
-  { date: "2019-12-24", emailIn: 63, emailOut: 23, inbox: 1 },
-  { date: "2019-12-25", emailIn: 44, emailOut: 0, inbox: 0 },
-  { date: "2019-12-26", emailIn: 61, emailOut: 2, inbox: 4 },
-  { date: "2019-12-27", emailIn: 57, emailOut: 7, inbox: 2 },
-  { date: "2019-12-28", emailIn: 44, emailOut: 12, inbox: 1 },
-  { date: "2019-12-29", emailIn: 79, emailOut: 6, inbox: 0 },
-  { date: "2019-12-30", emailIn: 63, emailOut: 23, inbox: 1 },
-  { date: "2019-12-31", emailIn: 44, emailOut: 0, inbox: 0 },
-  { date: "2020-01-01", emailIn: 57, emailOut: 7, inbox: 2 },
-  { date: "2020-01-02", emailIn: 44, emailOut: 12, inbox: 1 },
-  { date: "2020-01-03", emailIn: 79, emailOut: 6, inbox: 0 },
-  { date: "2020-01-04", emailIn: 63, emailOut: 23, inbox: 1 },
-  { date: "2020-01-05", emailIn: 44, emailOut: 0, inbox: 0 },
-  { date: "2020-01-06", emailIn: 61, emailOut: 2, inbox: 4 },
-  { date: "2020-01-07", emailIn: 79, emailOut: 6, inbox: 0 },
-  { date: "2020-01-08", emailIn: 63, emailOut: 23, inbox: 1 },
-  { date: "2020-01-09", emailIn: 44, emailOut: 0, inbox: 0 },
-  { date: "2020-01-10", emailIn: 61, emailOut: 2, inbox: 4 },
-  { date: "2020-01-11", emailIn: 57, emailOut: 7, inbox: 2 },
-  { date: "2020-01-12", emailIn: 44, emailOut: 12, inbox: 1 },
-  { date: "2020-01-13", emailIn: 79, emailOut: 6, inbox: 0 },
-  { date: "2020-01-14", emailIn: 63, emailOut: 23, inbox: 1 },
-  { date: "2020-01-15", emailIn: 44, emailOut: 0, inbox: 0 },
-  { date: "2020-01-16", emailIn: 61, emailOut: 2, inbox: 4 }
-]
+dataObj = []
 dataTime = "2020-01-16"
 
 document.addEventListener('DOMContentLoaded', function(){
   console.log("DOM loaded")
+  const emails = {}
 
-  loginButton = document.getElementById('login')
+  fetchMessages()
 
-  loginButton.addEventListener('click', function() {
-    console.log("CLICK")
-    // fetch("http://localhost:4567/auth/google_oauth2")
-    
-  })
+  function fetchMessages() {
+    // fetch('https://z-mail.ngrok.io/messages')
+    fetch('src/messages.json')
+    .then(response => response.json())
+    .then(messages => {
+      organizeMessages(messages)
+    })
+    .catch(error => {alert(error.messages)})
+  }
+
+  function organizeMessages(messages) {
+    messages.forEach(message => {
+      console.log(message)
+    //   const date = message.date
+    //   if (!!emails[date]){
+    //     emails[date].push(message)
+    //   } else {
+    //     emails[date] = []
+    //     emails[date].push(message)
+    //   }
+    })
+    // generateDataObj()
+  }
+
+  function generateDataObj() {
+    for (const key in email) {
+      email[key].label_ids.reduce((tally, label) => {
+        tally[label] = (tally[label] || 0)
+        return tally
+      }, {})
+    }
+  }
 
   function generateDisplayArrays() {
+    
+
     let date = ['x']
     let emailIn = ['Email In']
     let emailOut = ['Email Out']
@@ -161,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function(){
       href.className = "list-group-item"
       href.innerHTML = `
         <div class="checkbox"><label><input type="checkbox"></label></div>
-        <span class="glyphicon glyphicon-star-empty"></span>
+        <span class="glyphicon far fa-star"></span>
         <span class="name" style="min-width: 120px;
               display: inline-block;">${id}</span>
         <span class="">${date} Message #${itemCount}</span>
