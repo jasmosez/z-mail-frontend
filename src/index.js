@@ -2557,7 +2557,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function displayEmails(email) {
       console.log(email)
-      debugger
       const itemCount = 1
       const { from, subject, snippet } = email
       const href = document.createElement('a')
