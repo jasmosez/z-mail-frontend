@@ -1,7 +1,7 @@
 // additional seed data
 const dataObj = []
 let dataTime = new Date()
-dataTime = dataTime.getFullYear() + '-' + dataTime.getMonth() + '-' + dataTime.getDate()
+dataTime = dataTime.getFullYear() + '-' + (dataTime.getMonth() + 1) + '-' + dataTime.getDate()
 const data = [
   {
     "google_id": "16fce2961e193719",
@@ -2413,50 +2413,50 @@ const data = [
     ]
   }
 ]
-{/* <script language="javascript">
-var popupWindow = null;
-function positionedPopup(url,winName,w,h,t,l,scroll){
-settings =
-'height='+h+',width='+w+',top='+t+',left='+l+',scrollbars='+scroll+',resizable'
-popupWindow = window.open(url,winName,settings)
-} */}
 
-
-// var data;
-// $.getJSON("src/messages.json", function(json) {
-//   data = json;
-// });
-document.addEventListener('DOMContentLoaded', function(){
+document.addEventListener('DOMContentLoaded', function () {
   console.log("DOM loaded")
 
   const login = document.getElementById('login')
-  login.addEventListener('click', function(){
-    window.open("https://z-mail.ngrok.io/auth/google_oauth2", 'myWindow', 'height='+'600'+',width='+'500'+',top='+'100'+',left='+'200'+',scrollbars='+'yes'+',resizable')
+  login.addEventListener('click', function () {
+    window.open("https://z-mail.ngrok.io/auth/google_oauth2", 'myWindow', 'height=' + '600' + ',width=' + '500' + ',top=' + '100' + ',left=' + '200' + ',scrollbars=' + 'yes' + ',resizable')
   })
 
+  const logout = document.getElementById('sign-out')
+  logout.addEventListener('click', function () {
+    fetch('https://z-mail.ngrok.io/sessions', {
+      method: 'DELETE'
+    })
+  })
 
-  const emails = {}
-  
-  // fetchMessages()
-  
+  const emails = {} //reorganized emails - keys are days value is messages as array
+
+  // button to get data
+  const getData = document.getElementById('data')
+  getData.addEventListener('click', function () {
+    fetchMessages()
+  })
+
   function fetchMessages() {
     fetch('https://z-mail.ngrok.io/messages')
-    .then(response => response.json())
-    .then(messages => {
-      organizeMessages(messages)
-    })
-    .catch(error => {alert(error.messages)})
+      .then(response => response.json())
+      .then(messages => {
+        console.log(messages)
+        organizeMessages(messages)
+        // chart(messages)
+      })
+      .catch(error => { alert(error.messages) })
   }
-  
-  organizeMessages(data)
-  
+
+  // organizeMessages(data)
+
   function organizeMessages(messages) {
     messages.forEach(message => {
       // console.log(message)
       const convert = new Date(message.date)
-      const date = convert.getFullYear() + '-' + convert.getMonth() + '-' + convert.getDate()
+      const date = convert.getFullYear() + '-' + (convert.getMonth() + 1) + '-' + convert.getDate()
       // console.log(date)
-      if (!!emails[date]){
+      if (!!emails[date]) {
         emails[date].push(message)
       } else {
         emails[date] = []
@@ -2481,26 +2481,17 @@ document.addEventListener('DOMContentLoaded', function(){
       })
       console.log(dataDay)
       dataDay["date"] = key
+      !!dataDay['sent'] ? null : dataDay['sent'] = 0
+      !!dataDay['inbox'] ? null : dataDay['inbox'] = 0
       dataObj.push(dataDay)
+      // debugger
     }
-    generateDisplayArrays()
+    chart()
+    // generateDisplayArrays()
   }
 
-  // function blaBla() {
-    // for (const key in emails) {
-    //   dataDay = {}
-    //   emails[key].forEach(message => {
-    //     let tally = message.labels.reduce((tally, label) => {
-    //       tally[label] = (tally[label] || 1)
-    //       return tally
-    //     }, {})
-    //     console.log(tally)
-    //   })
-    // }
-  // }
-
   function generateDisplayArrays() {
-    
+
 
     let date = ['x']
     let emailIn = ['Email In']
@@ -2515,7 +2506,7 @@ document.addEventListener('DOMContentLoaded', function(){
     })
 
     // return array of four arrays: date, emailIn, emailOut, inbox
-    // console.log(date, emailIn, emailOut, inbox)
+    console.log(date, emailIn, emailOut, inbox)
     return [date, emailIn, emailOut, inbox]
   }
 
@@ -2528,91 +2519,104 @@ document.addEventListener('DOMContentLoaded', function(){
     // const showPanel = document.getElementById('show')
     // showPanel.innerText = `${id} on ${date}`
     // ul = document.createElement('ul')
-    while (listGroup.hasChildNodes()) {  
+    while (listGroup.hasChildNodes()) {
       listGroup.removeChild(listGroup.firstChild);
     }
-    
-    for (let i = 1; i <= itemCount; i++) {
-      // li = document.createElement('li')
-      // li.innerText = `Message #${i}`
-      // ul.appendChild(li)
-      displayEmails(arguments, i)
+
+    prepEmailsForDisplay(arguments)
+
+    function prepEmailsForDisplay(arguments) {
+      const id = arguments[0].id
+      const show = document.getElementById('show')
+      show.innerHTML = `View: ${id}`
+      const date = arguments[0].x.getFullYear() + '-' + (arguments[0].x.getMonth() + 1) + '-' + arguments[0].x.getDate()
+      const mail = emails[date]
+
+      console.log('mail: ', mail)
+
+      if (id === 'Inbox') {
+        const type = 'INBOX'
+        iterateEmails(mail, type)
+      } else if (id === 'Email In') {
+        let filtered = mail.filter(message => !message.labels.includes('SENT'))
+        //   !message.labels.includes('SENT')
+        //   console.log('message: ', !message.labels.includes('SENT'))
+        // })
+        console.log('filtered: ', filtered)
+        displayEmails(filtered)
+      } else if (id === 'Email Out') {
+        const type = 'SENT'
+        iterateEmails(mail, type)
+      }
     }
 
-    // showPanel.appendChild(ul)
-    // value: 4
-    // id: "Inbox"
-    // index: 34
-    // name: "Inbox"
-    // for as many messages as we would expect, generate a little table of results
+    function iterateEmails(emails, type) {
+      let mail = emails.filter(message => message.labels.includes(type))
+      displayEmails(mail)
+    }
 
-    // mock up gmails for 1 or 2 days
-    // date, label, message
-    
-
-    function displayEmails(arguments, num) {
-      const id = arguments[0].id
-      const itemCount = num
-      const date = arguments[0].x
+    function displayEmails(email) {
+      const itemCount = 1
+      const { from, subject, snippet } = email
       const href = document.createElement('a')
-      href.href = '#'
+      // href.href = '#'
       href.className = "list-group-item"
       href.innerHTML = `
         <div class="checkbox"><label><input type="checkbox"></label></div>
         <span class="glyphicon far fa-star"></span>
         <span class="name" style="min-width: 120px;
-              display: inline-block;">${id}</span>
-        <span class="">${date} Message #${itemCount}</span>
-        <span class="text-muted" style="font-size: 11px;">Random Message</span>
+              display: inline-block;">${from}</span>
+        <span class="">${subject}</span>
+        <span class="text-muted" style="font-size: 11px;">${snippet}</span>
         <span class="badge">12:10 AM</span>
         <span class="pull-right"><span class="glyphicon glyphicon-paperclip"></span></span>`
       listGroup.append(href)
     }
 
-    
+
   }
 
-  const chart = c3.generate({
-    data: {
-      x: 'x',
-      //        xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
-      columns: generateDisplayArrays(),
-      onclick: function () {
-        clickHandler(arguments)
+
+  function chart() {
+    // organizeMessages(messages)
+    c3.generate({
+      data: {
+        x: 'x',
+        //        xFormat: '%Y%m%d', // 'xFormat' can be used as custom format of 'x'
+        columns: generateDisplayArrays(),
+        onclick: function () {
+          clickHandler(arguments)
+        },
+        axes: {
+          "Inbox": 'y2'
+        },
+        types: {
+          "Inbox": 'bar'
+        }
       },
-      axes: {
-        "Inbox": 'y2'
-      },
-      types: {
-        "Inbox": 'bar'
+      axis: {
+        x: {
+          type: 'timeseries',
+          tick: {
+            format: '%Y-%m-%d'
+          }
+        },
+        y: {
+          label: {
+            text: 'Daily Throughput',
+            position: 'outer-middle'
+          }
+        },
+        y2: {
+          show: true,
+          label: {
+            text: `Inbox as of ${dataTime}`,
+            position: 'outer-middle'
+          }
+        }
       }
-    },
-    axis: {
-      x: {
-        type: 'timeseries',
-        tick: {
-          format: '%Y-%m-%d'
-        }
-      },
-      y: {
-        label: {
-          text: 'Daily Throughput',
-          position: 'outer-middle'
-        }
-      },
-      y2: {
-        show: true,
-        label: {
-          text: `Inbox as of ${dataTime}`,
-          position: 'outer-middle'
-        }
-      }
-    }
-  });
-
-
-
-  
+    });
+  }
 
 })
 
