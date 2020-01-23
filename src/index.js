@@ -2543,7 +2543,7 @@ document.addEventListener('DOMContentLoaded', function () {
         //   console.log('message: ', !message.labels.includes('SENT'))
         // })
         console.log('filtered: ', filtered)
-        displayEmails(filtered)
+        filtered.forEach(message => displayEmails(message))
       } else if (id === 'Email Out') {
         const type = 'SENT'
         iterateEmails(mail, type)
@@ -2552,10 +2552,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function iterateEmails(emails, type) {
       let mail = emails.filter(message => message.labels.includes(type))
-      displayEmails(mail)
+      mail.forEach(message => displayEmails(message))
     }
 
     function displayEmails(email) {
+      console.log(email)
+      debugger
       const itemCount = 1
       const { from, subject, snippet } = email
       const href = document.createElement('a')
