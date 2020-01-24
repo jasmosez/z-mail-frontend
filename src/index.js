@@ -2417,6 +2417,34 @@ const data = [
 document.addEventListener('DOMContentLoaded', function () {
   console.log("DOM loaded")
 
+  const enter = document.getElementById('myBtn')
+  const modal = document.getElementById('myModal')
+  const everything = document.getElementById('everything')
+  enter.addEventListener('click', function(){
+    // const content = everything.innerHTML
+    // modal.style.display = 'none'
+    // everything.style.display = 'contents'
+    // everything.innerHTML = content
+    enter.disabled = true
+    let spinner = document.getElementById('spinner')
+    spinner.style.display = 'contents'
+    let modelContent = document.getElementById('modelContent')
+    let div = document.createElement('div')
+    let p = document.createElement('p')
+    p.innerHTML = `
+      Please wait while we get a weeks worth of emails
+    `
+    div.append(p)
+    modelContent.append(div)
+    console.log(spinner)
+    fetchMessages()
+    // organizeMessages(data)
+    // modal.append(
+    
+    //   )
+  })
+
+
   const login = document.getElementById('login')
   login.addEventListener('click', function () {
     window.open("https://z-mail.ngrok.io/auth/google_oauth2", 'myWindow', 'height=' + '600' + ',width=' + '500' + ',top=' + '100' + ',left=' + '200' + ',scrollbars=' + 'yes' + ',resizable')
@@ -2427,20 +2455,23 @@ document.addEventListener('DOMContentLoaded', function () {
     fetch('https://z-mail.ngrok.io/sessions', {
       method: 'DELETE'
     })
+    location.reload ();
   })
 
   const emails = {} //reorganized emails - keys are days value is messages as array
 
   // button to get data
-  const getData = document.getElementById('data')
-  getData.addEventListener('click', function () {
-    fetchMessages()
-  })
+  // const getData = document.getElementById('data')
+  // getData.addEventListener('click', function () {
+  //   fetchMessages()
+  // })
 
   function fetchMessages() {
     fetch('https://z-mail.ngrok.io/messages')
       .then(response => response.json())
       .then(messages => {
+        modal.style.display = 'none'
+        everything.style.display = 'contents'
         console.log(messages)
         organizeMessages(messages)
         // chart(messages)
@@ -2448,7 +2479,7 @@ document.addEventListener('DOMContentLoaded', function () {
       .catch(error => { alert(error.messages) })
   }
 
-  organizeMessages(data)
+  // organizeMessages(data)
 
   function organizeMessages(messages) {
     messages.forEach(message => {
@@ -2558,7 +2589,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function displayEmails(email) {
-      console.log(email)
+      // console.log(email)
       const itemCount = 1
       let { from, subject, snippet, date } = email
       let star = ''
@@ -2569,7 +2600,7 @@ document.addEventListener('DOMContentLoaded', function () {
       date = new Date(date)
       date = appendLeadingZeroes(date.getHours()) + ":" + appendLeadingZeroes(date.getMinutes()) + ":" + appendLeadingZeroes(date.getSeconds()) 
       date = tConvert(date)
-      console.log(date)
+      // console.log(date)
       // creating the a element that makes each message
       const href = document.createElement('a')
       // change star icon

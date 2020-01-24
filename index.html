@@ -52,7 +52,28 @@
     crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/ac3af793c1.js" crossorigin="anonymous"></script>
 
+  <div id="myModal" class="modal">
 
+    <!-- Modal content -->
+    <div class="modal-content text-center" id="modelContent" style="display: flex; justify-content: space-between;">
+      <div>
+      <button id="login" class="login" style="width: 20%; align-self: center;">Google Login</button>
+      </div>
+      <div>
+      <p>Please wait until after logging in to enter site</p>
+      </div>
+      <div>
+      <button id="myBtn" style="width: 20%; align-self: center;">Enter</button>
+      </div>
+      <div>
+        <div class="spinner-border" role="status" style="display: none;" id="spinner">
+          <span class="sr-only">Loading...</span>
+          </div>
+      </div>
+    </div>
+  
+  </div>
+<div class="everything" id="everything">
   <!-- dashboard template -->
   <!-- top bar -->
   <nav class="navbar navbar-dark fixed-top bg-dark flex-lg-nowrap p-0 shadow">
@@ -115,20 +136,20 @@
           class="d-flex justify-content-between flex-wrap flex-lg-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h2">Chart</h1>
           <div class="btn-toolbar mb-2 mb-lg-0">
-            <div class="btn-group mr-2">
+            <!-- <div class="btn-group mr-2">
               <button type="button" class="btn btn-md btn-outline-secondary">Share</button>
               <button type="button" class="btn btn-md btn-outline-secondary">Export</button>
-            </div>
+            </div> -->
             <button type="button" class="btn btn-md btn-outline-secondary dropdown-toggle">
               <span data-feather="calendar"></span>
               This week
             </button>
           </div>
         </div>
-        <button id="login" class="login">Google Login</button>
+        <!-- <button id="login" class="login">Google Login</button> -->
         <!-- <a href="https://z-mail.ngrok.io/auth/google_oauth2">Login to Google!</a> -->
-        <button id='data'>Get Data</button>
-        <hr>
+        <!-- <button id='data'>Get Data</button> -->
+        <!-- <hr> -->
         <div id="container">
           <div id="chart" class="my-4 w-100" width="900" height="380"></div>
 
@@ -349,7 +370,7 @@
   <!-- <div id="options" class="sidebar">OPTIONS</div> -->
   </div>
 
-
+</div>
 </body>
 
 </html>
