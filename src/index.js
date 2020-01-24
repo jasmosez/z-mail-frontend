@@ -2448,7 +2448,7 @@ document.addEventListener('DOMContentLoaded', function () {
       .catch(error => { alert(error.messages) })
   }
 
-  organizeMessages(data)
+  // organizeMessages(data)
 
   function organizeMessages(messages) {
     messages.forEach(message => {
