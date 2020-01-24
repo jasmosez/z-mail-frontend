@@ -2591,7 +2591,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function displayEmails(email) {
       // console.log(email)
       const itemCount = 1
-      let { from, subject, snippet, date } = email
+      let { from, subject, snippet, date, message_id } = email
       let star = ''
       let important = ''
       let read = ''
@@ -2627,7 +2627,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <div style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 10em; padding-right: 2em;">
         <span class="name" style="font-weight: ${font};">${from}</span>
         </div>
-        <div class="float-left" style="overflow: hidden; white-space: nowrap; text-overflow:ellipsis;">
+        <div class="float-left" style="overflow: hidden; white-space: nowrap; text-overflow:ellipsis;" onclick="window.open('https://mail.google.com/mail/u/0/#search/rfc822msgid:${message_id}')">
         <span class="subject" style="font-weight: ${font};">${subject}</span>
         <span class="text-muted" style="font-size: 11px;"> - ${snippet}</span>
         </div>
