@@ -2590,7 +2590,7 @@ document.addEventListener('DOMContentLoaded', function () {
       // console.log(email)
       const itemCount = 1
 
-      let { from, subject, snippet, date } = email
+      let { from, subject, snippet, date, message_id } = email
       let star = ''
       let important = ''
       let read = ''
@@ -2606,14 +2606,23 @@ document.addEventListener('DOMContentLoaded', function () {
       // href.href = '#'
       href.className = "list-group-item"
       href.innerHTML = `
-        <div class="checkbox"><label><input type="checkbox"></label></div>
-        <span class="glyphicon far fa-star"></span>
-        <span class="name" style="min-width: 120px;
-              display: inline-block;">${from}</span>
-        <span class="">${subject}</span>
-        <span class="text-muted" style="font-size: 11px;">${snippet}</span>
-        <span class="badge">12:10 AM</span>
-        <span class="pull-right"><span class="glyphicon glyphicon-paperclip"></span></span>`
+
+        <div style="white-space: nowrap;">
+        <div class="checkbox" style="padding-right: 2%;"><label><input type="checkbox"></label></div>
+        <span class="glyphicon ${star}"></span>
+        <span class="glyphicon ${important}"></span>
+        </div>
+        <div style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 10em; padding-right: 2em;">
+        <span class="name" style="font-weight: ${font};">${from}</span>
+        </div>
+        <div class="float-left" style="overflow: hidden; white-space: nowrap; text-overflow:ellipsis;" onclick="window.open('https://mail.google.com/mail/u/0/#search/rfc822msgid:${message_id}')">
+        <span class="subject" style="font-weight: ${font};">${subject}</span>
+        <span class="text-muted" style="font-size: 11px;"> - ${snippet}</span>
+        </div>
+        <div class="float-right" style="white-space: nowrap;">
+        <span class="badge">${date}</span>
+        <span class="pull-right"><span class="glyphicon glyphicon-paperclip"></span></span>
+        </div>`
       listGroup.append(href)
     }
 
