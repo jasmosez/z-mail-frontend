@@ -2542,6 +2542,7 @@ document.addEventListener('DOMContentLoaded', function () {
         //   !message.labels.includes('SENT')
         //   console.log('message: ', !message.labels.includes('SENT'))
         // })
+        filtered = sortEmailByTime(filtered)
         console.log('filtered: ', filtered)
         filtered.forEach(message => displayEmails(message))
       } else if (id === 'Email Out') {
@@ -2552,25 +2553,57 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function iterateEmails(emails, type) {
       let mail = emails.filter(message => message.labels.includes(type))
+      mail = sortEmailByTime(mail)
       mail.forEach(message => displayEmails(message))
     }
 
     function displayEmails(email) {
       console.log(email)
       const itemCount = 1
-      const { from, subject, snippet } = email
+      let { from, subject, snippet, date } = email
+      let star = ''
+      let important = ''
+      let read = ''
+      let font = ''
+      // getting current time by each message
+      date = new Date(date)
+      date = appendLeadingZeroes(date.getHours()) + ":" + appendLeadingZeroes(date.getMinutes()) + ":" + appendLeadingZeroes(date.getSeconds()) 
+      date = tConvert(date)
+      console.log(date)
+      // creating the a element that makes each message
       const href = document.createElement('a')
+      // change star icon
+      email.labels.includes('STARRED') ? star = 'fas fa-star' : star = 'far fa-star'
+      // change important icon
+      email.labels.includes('IMPORTANT') ? important = 'fas fa-bookmark' : important = 'far fa-bookmark'
+      // change color of message if read
+      if (email.labels.includes('UNREAD')){
+        read = 'list-group-item'
+        font = 'bold'
+      } else {
+        read = 'list-group-item read'
+        font = 'normal'
+      }
+      href.style = 'display: flex; flex-flow: row nowrap; justify-content: space-between;'
       // href.href = '#'
-      href.className = "list-group-item"
+      href.className = read
       href.innerHTML = `
-        <div class="checkbox"><label><input type="checkbox"></label></div>
-        <span class="glyphicon far fa-star"></span>
-        <span class="name" style="min-width: 120px;
-              display: inline-block;">${from}</span>
-        <span class="">${subject}</span>
-        <span class="text-muted" style="font-size: 11px;">${snippet}</span>
-        <span class="badge">12:10 AM</span>
-        <span class="pull-right"><span class="glyphicon glyphicon-paperclip"></span></span>`
+        <div style="white-space: nowrap;">
+        <div class="checkbox" style="padding-right: 2%;"><label><input type="checkbox"></label></div>
+        <span class="glyphicon ${star}"></span>
+        <span class="glyphicon ${important}"></span>
+        </div>
+        <div style="overflow: hidden; text-overflow:ellipsis; white-space: nowrap; width: 10em; padding-right: 2em;">
+        <span class="name" style="font-weight: ${font};">${from}</span>
+        </div>
+        <div class="float-left" style="overflow: hidden; white-space: nowrap; text-overflow:ellipsis;">
+        <span class="subject" style="font-weight: ${font};">${subject}</span>
+        <span class="text-muted" style="font-size: 11px;"> - ${snippet}</span>
+        </div>
+        <div class="float-right" style="white-space: nowrap;">
+        <span class="badge">${date}</span>
+        <span class="pull-right"><span class="glyphicon glyphicon-paperclip"></span></span>
+        </div>`
       listGroup.append(href)
     }
 
@@ -2630,5 +2663,26 @@ document.addEventListener('DOMContentLoaded', function () {
 //   console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 // }
 
+function tConvert (time) {
+  time = new Date('1970-01-01T' + time + 'Z')
+  .toLocaleTimeString({},
+    {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'}
+  );
+  return time;
+}
 
+function appendLeadingZeroes(n){
+  if(n <= 9){
+    return "0" + n;
+  }
+  return n
+}
 // })
+function sortEmailByTime(mail){
+  mail.sort(function(a, b) {
+    a = new Date(a.date);
+    b = new Date(b.date);
+    return a>b ? -1 : a<b ? 1 : 0;
+  })
+  return mail
+}
