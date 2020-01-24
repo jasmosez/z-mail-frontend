@@ -105,10 +105,7 @@ body {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
 
-body{ 
-  margin-top:50px;
-}
-/* .nav-tabs { width: 100%;} */
+body{ margin-top:50px;}
 .nav-tabs .glyphicon:not(.no-margin) { margin-right:10px; }
 .tab-pane .list-group-item:first-child {border-top-right-radius: 0px;border-top-left-radius: 0px;}
 .tab-pane .list-group-item:last-child {border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;}
@@ -120,17 +117,8 @@ a.list-group-item.read { color: #222;background-color: #F3F3F3; }
 hr { margin-top: 5px;margin-bottom: 10px; }
 .nav-pills>li>a {padding: 5px 10px;}
 
-/* .list-group-item { */
-  /* overflow: hidden; */
-  /* white-space: nowrap; */
-  /* text-overflow:ellipsis; */
-  /* padding-right: 5em; */ 
-  /* width: 100%; */
-/* } */
-
-/* .list-group-item .badge {
-  overflow: visible;
-  padding-right: 0;
+span.text-muted {
+  overflow: hidden;
   white-space: nowrap;
 } */
 
@@ -142,6 +130,7 @@ div.table-responsive {
 .everything {
   display: none;
 }
+
 .modal {
   display: contents; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -188,3 +177,5 @@ div.table-responsive {
 /* .col-md-9.col-lg-10 {
   /* width: 100%; */
 /* } */ 
+=======
+}
