@@ -2,6 +2,8 @@
 const dataObj = []
 let dataTime = new Date()
 dataTime = dataTime.getFullYear() + '-' + (dataTime.getMonth() + 1) + '-' + dataTime.getDate()
+
+// dummy data
 const data = [
   {
     "google_id": "16fce2961e193719",
@@ -2414,41 +2416,46 @@ const data = [
   }
 ]
 
+// all this happens once content is loaded
 document.addEventListener('DOMContentLoaded', function () {
   console.log("DOM loaded")
 
   const enter = document.getElementById('myBtn')
   const modal = document.getElementById('myModal')
   const everything = document.getElementById('everything')
+  
+  // handle behavior for entering the site
+  // have yet to build in any control that user has logged into Google yet (i.e. that Zmail is authorized to load data from an account)
   enter.addEventListener('click', function(){
-    // const content = everything.innerHTML
-    // modal.style.display = 'none'
-    // everything.style.display = 'contents'
-    // everything.innerHTML = content
+    
+    // UI responds to button click
     enter.disabled = true
+
     let spinner = document.getElementById('spinner')
     spinner.style.display = 'contents'
-    let modelContent = document.getElementById('modelContent')
+    
+    let modalContent = document.getElementById('modalContent')
     let div = document.createElement('div')
     let p = document.createElement('p')
     p.innerHTML = `
-      Please wait while we get a weeks worth of emails
+      Please wait while we get a month's worth of emails
     `
     div.append(p)
-    modelContent.append(div)
+    modalContent.append(div)
     console.log(spinner)
-    fetchMessages()
-    // organizeMessages(data)
-    // modal.append(
     
-    //   )
+
+    // get messages from Gmail
+    fetchMessages()
+    
   })
 
-
+  // handle logging into google. I.e. AUthorizing the backend to get Gmail data
   const login = document.getElementById('login')
   login.addEventListener('click', function () {
     window.open("https://z-mail.ngrok.io/auth/google_oauth2", 'myWindow', 'height=' + '600' + ',width=' + '500' + ',top=' + '100' + ',left=' + '200' + ',scrollbars=' + 'yes' + ',resizable')
   })
+
 
   const logout = document.getElementById('sign-out')
   logout.addEventListener('click', function () {
@@ -2458,35 +2465,35 @@ document.addEventListener('DOMContentLoaded', function () {
     location.reload ();
   })
 
-  const emails = {} //reorganized emails - keys are days value is messages as array
-
-  // button to get data
-  // const getData = document.getElementById('data')
-  // getData.addEventListener('click', function () {
-  //   fetchMessages()
-  // })
+  //reorganized emails - keys are days value is messages as array
+  const emails = {} 
 
   function fetchMessages() {
     fetch('https://z-mail.ngrok.io/messages')
       .then(response => response.json())
       .then(messages => {
+        // remove modal and enter site
         modal.style.display = 'none'
         everything.style.display = 'contents'
         console.log(messages)
+
+        // front end deals with influx of data from backend
         organizeMessages(messages)
-        // chart(messages)
       })
       .catch(error => { alert(error.messages) })
   }
 
-  // organizeMessages(data)
-
+  // called from within fetchMessages
   function organizeMessages(messages) {
+    
+    // process batch of gmail messages received from backend
     messages.forEach(message => {
-      // console.log(message)
+    
+      // format date data
       const convert = new Date(message.date)
       const date = convert.getFullYear() + '-' + (convert.getMonth() + 1) + '-' + convert.getDate()
-      // console.log(date)
+
+      // add date as new key in emails object, if it does exist. Then add message
       if (!!emails[date]) {
         emails[date].push(message)
       } else {
@@ -2494,14 +2501,22 @@ document.addEventListener('DOMContentLoaded', function () {
         emails[date].push(message)
       }
     })
+
     generateDataObj()
-    console.log(`emails: `, emails)
+    // console.log(`emails: `, emails)
   }
 
+  // called from whithin organizeMessages
   function generateDataObj() {
+    
+    // work through each date key in emails object
     for (const key in emails) {
       let dataDay = {}
+      
+      // work through each message for the current day
       emails[key].forEach(message => {
+
+        // count the number of messages for each label used on the current day
         for (let i = 0; i < message.labels.length; i++) {
           if (!!dataDay[message.labels[i].toLowerCase()]) {
             dataDay[message.labels[i].toLowerCase()]++
@@ -2510,10 +2525,16 @@ document.addEventListener('DOMContentLoaded', function () {
           }
         }
       })
+
       console.log(dataDay)
+      
       dataDay["date"] = key
       !!dataDay['sent'] ? null : dataDay['sent'] = 0
       !!dataDay['inbox'] ? null : dataDay['inbox'] = 0
+
+      //custom code for jasmosez's To Do label
+      !!dataDay['label_18'] ? null : dataDay['label_18'] = 0
+
       dataObj.push(dataDay)
       // debugger
     }
@@ -2528,19 +2549,24 @@ document.addEventListener('DOMContentLoaded', function () {
     let emailIn = ['Email In']
     let emailOut = ['Email Out']
     let inbox = ['Inbox']
+    let todo = ['To Do']
 
     dataObj.forEach(obj => {
       date.push(obj.date)
       emailIn.push(emails[obj.date].length - obj.sent)
       emailOut.push(obj.sent)
       inbox.push(obj.inbox)
+
+      //custom code for jasmosez's To Do label
+      todo.push(obj.label_18)
     })
 
     // return array of four arrays: date, emailIn, emailOut, inbox
-    console.log(date, emailIn, emailOut, inbox)
-    return [date, emailIn, emailOut, inbox]
+    console.log(date, emailIn, emailOut, inbox, todo)
+    return [date, emailIn, emailOut, inbox, todo]
   }
 
+  // handles clicks on the chart and subsequent display of corresponding messages
   function clickHandler(arguments) {
     // debugger
     const listGroup = document.getElementById('list-group')
@@ -2641,7 +2667,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   }
 
-
+  // called from within generateDataObj
   function chart() {
     // organizeMessages(messages)
     c3.generate({
@@ -2653,10 +2679,12 @@ document.addEventListener('DOMContentLoaded', function () {
           clickHandler(arguments)
         },
         axes: {
-          "Inbox": 'y2'
+          "Inbox": 'y2',
+          "To Do": 'y2'
         },
         types: {
-          "Inbox": 'bar'
+          "Inbox": 'bar',
+          "To Do": 'bar'
         }
       },
       axis: {
